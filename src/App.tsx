@@ -416,6 +416,39 @@ function App() {
       {/* Footer */}
       <footer className="border-t border-green-400/30 py-8">
         <div className="container mx-auto px-6 text-center">
+          {/* Mobile Spotify Widget */}
+          {currentTrack && (
+            <div className="lg:hidden mb-6 flex justify-center">
+              <div className="flex items-center space-x-3 bg-gray-900/80 border border-green-400/30 rounded-lg px-4 py-3 backdrop-blur-sm max-w-sm">
+                <Music className="w-4 h-4 text-green-400 flex-shrink-0" />
+                <img 
+                  src={currentTrack.image} 
+                  alt="Album cover" 
+                  className="w-10 h-10 rounded object-cover flex-shrink-0"
+                />
+                <div className="flex flex-col min-w-0 flex-1">
+                  <div className="text-white text-sm font-medium truncate">
+                    {currentTrack.name}
+                  </div>
+                  <div className="text-gray-400 text-xs truncate">
+                    {currentTrack.artist}
+                  </div>
+                  <div className="w-full h-1 bg-gray-700 rounded-full overflow-hidden mt-2">
+                    <div 
+                      className="h-full bg-gradient-to-r from-green-400 to-cyan-400 transition-all duration-1000"
+                      style={{ width: `${currentTrack.progress}%` }}
+                    ></div>
+                  </div>
+                </div>
+                {isPlaying ? (
+                  <Pause className="w-4 h-4 text-green-400 flex-shrink-0" />
+                ) : (
+                  <Play className="w-4 h-4 text-green-400 flex-shrink-0" />
+                )}
+              </div>
+            </div>
+          )}
+          
           <p className="text-gray-400">
             <span className="text-cyan-400">&copy;</span> 2024 
             <span className="text-green-400 mx-2">•</span> 
