@@ -14,7 +14,7 @@ import {
   ShoppingCart,
   FileText,
   Cpu,
-  Monitor
+  Monitor,
   Music,
   Play,
   Pause,
