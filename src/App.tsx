@@ -15,11 +15,19 @@ import {
   FileText,
   Cpu,
   Monitor
+  Music,
+  Play,
+  Pause,
+  Cloud,
+  Settings,
+  Activity
 } from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
   const [glitchText, setGlitchText] = useState('DEVELOPER');
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const glitchWords = ['DEVELOPER', 'ARCHITECT', 'INNOVATOR', 'CREATOR'];
@@ -33,6 +41,21 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Spotify integration (mock data for demo - replace with actual Spotify API)
+  useEffect(() => {
+    // Mock Spotify data - replace with actual API calls
+    const mockTrack = {
+      name: "Cyberpunk 2077 Main Theme",
+      artist: "Marcin Przybyłowicz",
+      album: "Cyberpunk 2077 (Original Game Soundtrack)",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
+      progress: 65,
+      duration: 180
+    };
+    
+    setCurrentTrack(mockTrack);
+    setIsPlaying(true);
+  }, []);
   const technologies = [
     { name: 'C#', icon: <Code className="w-8 h-8" />, color: 'text-purple-400' },
     { name: '.NET Core', icon: <Server className="w-8 h-8" />, color: 'text-blue-400' },
@@ -41,7 +64,15 @@ function App() {
     { name: 'Vue.js', icon: <Globe className="w-8 h-8" />, color: 'text-green-400' },
     { name: 'PHP', icon: <Monitor className="w-8 h-8" />, color: 'text-indigo-400' },
     { name: 'MongoDB', icon: <Database className="w-8 h-8" />, color: 'text-green-500' },
-    { name: 'Docker', icon: <Box className="w-8 h-8" />, color: 'text-cyan-400' }
+    { name: 'PostgreSQL', icon: <Database className="w-8 h-8" />, color: 'text-blue-500' },
+    { name: 'Redis', icon: <Activity className="w-8 h-8" />, color: 'text-red-400' },
+    { name: 'Docker', icon: <Box className="w-8 h-8" />, color: 'text-cyan-400' },
+    { name: 'Kubernetes', icon: <Settings className="w-8 h-8" />, color: 'text-blue-400' },
+    { name: 'Azure', icon: <Cloud className="w-8 h-8" />, color: 'text-blue-300' },
+    { name: 'Azure DevOps', icon: <Terminal className="w-8 h-8" />, color: 'text-cyan-300' },
+    { name: 'RabbitMQ', icon: <Zap className="w-8 h-8" />, color: 'text-orange-400' },
+    { name: 'xUnit', icon: <Code className="w-8 h-8" />, color: 'text-green-300' },
+    { name: 'Serilog', icon: <FileText className="w-8 h-8" />, color: 'text-purple-300' }
   ];
 
   return (
@@ -58,6 +89,40 @@ function App() {
             <div className="text-xl font-bold">
               <span className="text-cyan-400">&gt;</span> PORTFOLIO.EXE
             </div>
+            
+            {/* Spotify Widget */}
+            {currentTrack && (
+              <div className="hidden lg:flex items-center space-x-3 bg-gray-900/80 border border-green-400/30 rounded-lg px-4 py-2 backdrop-blur-sm">
+                <Music className="w-4 h-4 text-green-400" />
+                <img 
+                  src={currentTrack.image} 
+                  alt="Album cover" 
+                  className="w-8 h-8 rounded object-cover"
+                />
+                <div className="flex flex-col min-w-0">
+                  <div className="text-white text-sm font-medium truncate max-w-32">
+                    {currentTrack.name}
+                  </div>
+                  <div className="text-gray-400 text-xs truncate max-w-32">
+                    {currentTrack.artist}
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {isPlaying ? (
+                    <Pause className="w-3 h-3 text-green-400" />
+                  ) : (
+                    <Play className="w-3 h-3 text-green-400" />
+                  )}
+                  <div className="w-16 h-1 bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-green-400 to-cyan-400 transition-all duration-1000"
+                      style={{ width: `${currentTrack.progress}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             <div className="hidden md:flex space-x-8">
               {['about', 'stack', 'experience', 'projects', 'contact'].map((section) => (
                 <button
@@ -159,6 +224,40 @@ function App() {
                 <div className="text-white font-semibold">{tech.name}</div>
               </div>
             ))}
+          </div>
+          
+          {/* Additional Skills */}
+          <div className="mt-12 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-center mb-8">
+              <span className="text-cyan-400">Additional</span>
+              <span className="text-white"> Expertise</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gradient-to-br from-purple-900/30 to-black/50 border border-purple-400/30 p-6 rounded-lg">
+                <h4 className="text-purple-400 font-bold mb-3">Cloud & DevOps</h4>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div>• Azure Cloud Services</div>
+                  <div>• CI/CD with Azure Pipelines</div>
+                  <div>• Container Orchestration</div>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-900/30 to-black/50 border border-cyan-400/30 p-6 rounded-lg">
+                <h4 className="text-cyan-400 font-bold mb-3">Testing & Quality</h4>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div>• Unit Testing with xUnit</div>
+                  <div>• Test-Driven Development</div>
+                  <div>• Code Quality Assurance</div>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-green-900/30 to-black/50 border border-green-400/30 p-6 rounded-lg">
+                <h4 className="text-green-400 font-bold mb-3">Monitoring & Messaging</h4>
+                <div className="text-gray-300 text-sm space-y-1">
+                  <div>• Structured Logging (Serilog)</div>
+                  <div>• Message Queues (RabbitMQ)</div>
+                  <div>• Performance Monitoring</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
